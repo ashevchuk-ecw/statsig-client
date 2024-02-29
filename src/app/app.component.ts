@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { StService } from './statsig.service';
 import { StClientLibService } from 'st-client-lib';
-import { default as Statsig, DynamicConfig } from 'statsig-js';
 
 @Component({
   selector: 'app-root',
@@ -10,40 +10,28 @@ import { default as Statsig, DynamicConfig } from 'statsig-js';
 export class AppComponent {
   title = 'statsig-client';
 
-  constructor(private stService: StClientLibService) {
+  constructor(
+    private localStatsigService: StService,
+    private depsStatsigService: StClientLibService
+  ) {
 
   }
 
-  public async statsigInit() {
-    await Statsig.initialize(
-			'client-C1rOhOyc5O1TqQIpY3MCp5wCtjfxlXMsUvQSTnKqPi4',
-			{
-				appVersion: '42',
-				custom: {
-					appName: 'Statsig POC'
-				},
-				userID: '17322425',
-				locale: 'UA',
-			},
-			{ environment: { tier: 'development' } }
-		);
+  public async initStatsig() {
+    await this.localStatsigService.statsigInit();
   }
 
-  public initStatsig() {
-    this.statsigInit();
+  public async initDepsStatsig() {
+    await this.depsStatsigService.statsigInit('');
   }
 
-  public initStatsigFromService() {
-    this.stService.statsigInit();
-  }
-
-  public getExperimentFromService(experimentName: string) {
-    const dc = this.stService.getExperiment(experimentName);
+  public getDepsExperiment(experimentName: string) {
+    const dc = this.depsStatsigService.getExperiment(experimentName);
     console.log(`Experiment: ${experimentName}:`, dc);
   }
 
   public getExperiment(experimentName: string) {
-    const dc = Statsig.getExperiment(experimentName);
+    const dc = this.localStatsigService.getExperiment(experimentName);
     console.log(`Experiment: ${experimentName}:`, dc);
   }
 }

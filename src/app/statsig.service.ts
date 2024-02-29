@@ -4,13 +4,13 @@ import Statsig, { DynamicConfig } from 'statsig-js';
 @Injectable({
   providedIn: 'root'
 })
-export class StClientLibService {
+export class StService {
 
-  constructor() { }
+    constructor() { }
 
-  public async statsigInit(key: string): Promise<void> {
+    public async statsigInit(): Promise<void> {
 		Statsig.initialize(
-			key,
+			'client-C1rOhOyc5O1TqQIpY3MCp5wCtjfxlXMsUvQSTnKqPi4',
 			{
 				appVersion: '42',
 				custom: {
@@ -23,13 +23,13 @@ export class StClientLibService {
 		).then(() => {
       console.log('done');
     });
-}
+	}
 
-public isFeatureEnabled(key: string): boolean {
-	return Statsig.checkGate(key);
-}
+	public isFeatureEnabled(key: string): boolean {
+		return Statsig.checkGate(key);
+	}
 
-public getExperiment(experimentName: string): DynamicConfig {
-	return Statsig.getExperiment(experimentName);;
-}
+	public getExperiment(experimentName: string): DynamicConfig {
+        return Statsig.getExperiment(experimentName);;
+	}
 }

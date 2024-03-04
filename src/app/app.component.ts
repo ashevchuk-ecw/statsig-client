@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StService } from './statsig.service';
 import { StClientLibService } from 'st-client-lib';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,7 +23,7 @@ export class AppComponent {
   }
 
   public async initDepsStatsig() {
-    await this.depsStatsigService.statsigInit('');
+    await this.depsStatsigService.statsigInit('client-C1rOhOyc5O1TqQIpY3MCp5wCtjfxlXMsUvQSTnKqPi4');
   }
 
   public getDepsExperiment(experimentName: string) {

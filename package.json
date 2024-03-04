@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "postinstall": "ngcc --properties es2020 browser module main",
     "start": "ng serve",
     "build": "ng build st-client-lib && ng build",
     "watch": "ng build --watch --configuration development",
@@ -19,7 +20,8 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "rxjs": "~7.5.0",
-    "statsig-js": "^4.49.0",
+    "st-client-lib": "0.0.3",
+    "statsig-js": "^4.48.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

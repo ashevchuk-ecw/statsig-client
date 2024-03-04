@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import Statsig, { DynamicConfig } from 'statsig-js';
+import { DynamicConfig } from 'statsig-js';
+import * as StatsigRoot from 'statsig-js'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StClientLibService {
 
-  constructor() { }
-
-  public async statsigInit(key: string): Promise<void> {
-		Statsig.initialize(
+  	public async statsigInit(key: string): Promise<void> {
+		StatsigRoot.default.initialize(
 			key,
 			{
 				appVersion: '42',
@@ -26,10 +25,10 @@ export class StClientLibService {
 }
 
 public isFeatureEnabled(key: string): boolean {
-	return Statsig.checkGate(key);
+	return StatsigRoot.default.checkGate(key);
 }
 
 public getExperiment(experimentName: string): DynamicConfig {
-	return Statsig.getExperiment(experimentName);;
+	return StatsigRoot.default.getExperiment(experimentName);;
 }
 }

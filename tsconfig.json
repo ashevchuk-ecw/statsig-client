@@ -14,14 +14,15 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2020",
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "module": "esnext",
+    "paths": {
+      "st-client-lib": [
+        "dist/st-client-lib"
+      ]
+    },
+    "module": "es2020",
     "lib": [
       "es2020",
       "dom"

@@ -1,34 +1,38 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { DynamicConfig } from 'statsig-js';
-import * as StatsigRoot from 'statsig-js'
+
+export const STATSIG: InjectionToken<string> = new InjectionToken('Statsig');
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StClientLibService {
+  constructor(@Inject(STATSIG) protected Statsig: any) {
+    console.log('Statsig from client', this.Statsig);
+  }
 
-  	public async statsigInit(key: string): Promise<void> {
-		StatsigRoot.default.initialize(
-			key,
-			{
-				appVersion: '42',
-				custom: {
-					appName: 'Statsig POC'
-				},
-				userID: '17322425',
-				locale: 'UA',
-			},
-			{ environment: { tier: 'development' } }
-		).then(() => {
+  public async statsigInit(key: string): Promise<void> {
+    this.Statsig.initialize(
+      key,
+      {
+        appVersion: '42',
+        custom: {
+          appName: 'Statsig POC',
+        },
+        userID: '17322425',
+        locale: 'UA',
+      },
+      { environment: { tier: 'development' } }
+    ).then(() => {
       console.log('done');
     });
-}
+  }
 
-public isFeatureEnabled(key: string): boolean {
-	return StatsigRoot.default.checkGate(key);
-}
+  public isFeatureEnabled(key: string): boolean {
+    return this.Statsig.checkGate(key);
+  }
 
-public getExperiment(experimentName: string): DynamicConfig {
-	return StatsigRoot.default.getExperiment(experimentName);;
-}
+  public getExperiment(experimentName: string): DynamicConfig {
+    return this.Statsig.getExperiment(experimentName);
+  }
 }
